@@ -950,7 +950,7 @@
 
     move-result-object v0
 
-    const v1, 0x1120057
+    const v1, #android:bool@config_voice_capable#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1071,7 +1071,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e0004
+    const v1, #android:integer@config_soundEffectVolumeDb#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -1114,7 +1114,7 @@
 
     move-result-object v0
 
-    const v1, 0x112007a
+    const v1, #android:bool@config_camera_sound_forced#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1166,7 +1166,7 @@
 
     move-result-object v0
 
-    const v1, 0x10e007b
+    const v1, #android:integer@config_safe_media_volume_index#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -1183,7 +1183,7 @@
 
     move-result-object v0
 
-    const v1, 0x112007f
+    const v1, #android:bool@config_useFixedVolume#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1196,7 +1196,7 @@
 
     move-result-object v0
 
-    const v1, 0x1120013
+    const v1, #android:bool@config_useMasterVolume#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -1209,7 +1209,7 @@
 
     move-result-object v0
 
-    const v1, 0x1070015
+    const v1, #android:array@config_masterVolumeRamp#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getIntArray(I)[I
 
@@ -2879,6 +2879,24 @@
 
     .line 1146
     :cond_2
+    invoke-direct/range {p0 .. p2}, Landroid/media/AudioService;->flymeCheckResumeRingerModeNormal(II)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_flyme_0
+
+    move-object/from16 v0, p0
+
+    move/from16 v1, p1
+
+    move-object/from16 v2, p4
+
+    invoke-direct {v0, v1, v2}, Landroid/media/AudioService;->flymeSetStreamVolume(ILjava/lang/String;)V
+
+    return-void
+
+    :cond_flyme_0
+
     move-object/from16 v0, p0
 
     move/from16 v1, p2
@@ -3572,6 +3590,8 @@
 
     .line 1122
     :cond_1
+    goto/16 :goto_flyme_0
+
     iget-object v0, p0, Landroid/media/AudioService;->mVolumeController:Landroid/media/AudioService$VolumeController;
 
     invoke-virtual {v0, v6, p3}, Landroid/media/AudioService$VolumeController;->suppressAdjustment(II)Z
@@ -3601,6 +3621,7 @@
     invoke-static {v0, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_2
+    :goto_flyme_0
     move-object v0, p0
 
     move v2, p1
@@ -6425,7 +6446,7 @@
 
     move-result-object v0
 
-    const v1, 0x112007a
+    const v1, #android:bool@config_camera_sound_forced#t
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -7125,7 +7146,7 @@
 
     move-result-object v11
 
-    const v12, 0x1110001
+    const v12, #android:xml@audio_assets#t
 
     invoke-virtual {v11, v12}, Landroid/content/res/Resources;->getXml(I)Landroid/content/res/XmlResourceParser;
 
@@ -7953,7 +7974,7 @@
 
     move-result-object v1
 
-    const v2, 0x10e007b
+    const v2, #android:integer@config_safe_media_volume_index#t
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getInteger(I)I
 
@@ -7980,7 +8001,7 @@
 
     move-result-object v1
 
-    const v2, 0x1120078
+    const v2, #android:bool@config_safe_media_volume_enabled#t
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -11972,38 +11993,33 @@
     .prologue
     const/4 v3, 0x3
 
-    .line 1371
     iget-boolean v0, p0, Landroid/media/AudioService;->mUseFixedVolume:Z
 
     if-eqz v0, :cond_1
 
-    .line 1442
     :cond_0
     :goto_0
     return-void
 
-    .line 1375
     :cond_1
+    invoke-direct/range {p0 .. p2}, Landroid/media/AudioService;->flymeCheckResumeRingerModeNormal(II)Z
+
     invoke-direct {p0, p1}, Landroid/media/AudioService;->ensureValidStreamType(I)V
 
-    .line 1376
     iget-object v0, p0, Landroid/media/AudioService;->mStreamVolumeAlias:[I
 
     aget v8, v0, p1
 
-    .line 1377
     .local v8, "streamTypeAlias":I
     iget-object v0, p0, Landroid/media/AudioService;->mStreamStates:[Landroid/media/AudioService$VolumeStreamState;
 
     aget-object v7, v0, v8
 
-    .line 1379
     .local v7, "streamState":Landroid/media/AudioService$VolumeStreamState;
     invoke-direct {p0, p1}, Landroid/media/AudioService;->getDeviceForStream(I)I
 
     move-result v5
 
-    .line 1384
     .local v5, "device":I
     and-int/lit16 v0, v5, 0x380
 
@@ -18220,4 +18236,79 @@
     .packed-switch 0x2
         :pswitch_0
     .end packed-switch
+.end method
+
+.method private flymeCheckResumeRingerModeNormal(II)Z
+    .locals 6
+    .param p1, "streamType"    # I
+    .param p2, "direction"    # I
+
+    .prologue
+    const/4 v5, 0x2
+
+    const/4 v3, 0x0
+
+    const/4 v2, 0x1
+
+    const/16 v1, 0x26
+
+    .local v1, "mCanResumeNormalStreams":I
+    if-lez p2, :cond_1
+
+    move v0, v2
+
+    .local v0, "isUnMute":Z
+    :goto_0
+    shl-int v4, v2, p1
+
+    and-int/2addr v4, v1
+
+    if-eqz v4, :cond_2
+
+    if-eqz v0, :cond_2
+
+    invoke-virtual {p0}, Landroid/media/AudioService;->getRingerModeInternal()I
+
+    move-result v4
+
+    if-eqz v4, :cond_0
+
+    invoke-virtual {p0}, Landroid/media/AudioService;->getRingerModeInternal()I
+
+    move-result v4
+
+    if-ne v4, v2, :cond_2
+
+    :cond_0
+    invoke-direct {p0, v5, v2}, Landroid/media/AudioService;->setRingerModeInt(IZ)V
+
+    invoke-direct {p0, v5}, Landroid/media/AudioService;->setRingerModeExt(I)V
+
+    :goto_1
+    return v2
+
+    .end local v0    # "isUnMute":Z
+    :cond_1
+    move v0, v3
+
+    goto :goto_0
+
+    .restart local v0    # "isUnMute":Z
+    :cond_2
+    move v2, v3
+
+    goto :goto_1
+.end method
+
+.method private flymeSetStreamVolume(ILjava/lang/String;)V
+    .locals 1
+    .param p1, "streamType"    # I
+    .param p2, "callingPackage"    # Ljava/lang/String;
+
+    .prologue
+    const/4 v0, 0x1
+
+    invoke-virtual {p0, p1, v0, v0, p2}, Landroid/media/AudioService;->setStreamVolume(IIILjava/lang/String;)V
+
+    return-void
 .end method
