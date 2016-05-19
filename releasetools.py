@@ -25,8 +25,20 @@ def FlashSUperSU(info):
     info.script.AppendExtra(('run_program("/sbin/busybox", "unzip", "/tmp/supersu/UPDATE-SuperSU.zip", "META-INF/com/google/android/*", "-d", "/tmp/supersu");'))
     info.script.AppendExtra(('run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/UPDATE-SuperSU.zip");'))
 
+def InstallDolby(info):
+    garyyiu2015 = info.input_zip.read("META/Dolby.zip")
+    common.ZipWriteStr(info.output_zip, "Dolby/Dolby.zip", garyyiu2015)
+
+def FlashDolby(info):
+    info.script.AppendExtra(('ui_print("Flash Dolby Audio...");'))
+    info.script.AppendExtra(('package_extract_dir("Dolby", "/tmp/Dolby");'))
+    info.script.AppendExtra(('run_program("/sbin/busybox", "unzip", "/tmp/Dolby/Dolby.zip", "META-INF/com/google/android/*", "-d", "/tmp/Dolby");'))
+    info.script.AppendExtra(('run_program("/sbin/busybox", "sh", "/tmp/Dolby/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/Dolby/Dolby.zip");'))
+
 def FullOTA_InstallEnd(info):
     DeleteSystem(info)
     MountSystem(info)
     InstallSuperSU(info)
     FlashSUperSU(info)
+    InstallDolby(info)
+    FlashDolby(info)
