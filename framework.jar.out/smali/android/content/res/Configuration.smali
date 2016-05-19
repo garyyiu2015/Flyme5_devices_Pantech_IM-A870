@@ -3003,6 +3003,8 @@
 
     invoke-static {p0, p1, v0}, Landroid/content/res/Configuration$FlymeInjector;->diff(Landroid/content/res/Configuration;Landroid/content/res/Configuration;I)I
 
+    move-result v0
+
     return v0
 .end method
 
@@ -5325,6 +5327,8 @@
     :cond_1d
 
     invoke-static {p0, p1, v0}, Landroid/content/res/Configuration$FlymeInjector;->updateFrom(Landroid/content/res/Configuration;Landroid/content/res/Configuration;I)I
+
+    move-result v0
 
     return v0
 
